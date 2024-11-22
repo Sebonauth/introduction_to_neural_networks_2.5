@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Components of an Artificial Neuron</title>
+    <title>Making the Decision</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,79 +17,113 @@
             margin-bottom: 20px;
             padding: 20px;
             background-color: #ffffff;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease-in;
+            display: none; /* Initially hidden */
+            opacity: 0; /* Initially invisible for fade-in effect */
+            transition: opacity 0.5s ease-in; /* Fade-in effect */
         }
-        p {
+        h1, h3, h4 {
+            color: #333;
+            margin-top: 20px;
+        }
+        p, li {
             line-height: 1.6;
             color: #444;
             margin-bottom: 20px;
         }
         ul {
             padding-left: 20px;
-            margin-bottom: 20px;
         }
-        li {
-            margin-bottom: 10px;
+        .image-placeholder, .interactive-placeholder, .continue-button, .vocab-section, .why-it-matters, .test-your-knowledge, .faq-section {
+            text-align: left;
+        }
+        .image-placeholder img, .interactive-placeholder img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .vocab-section, .why-it-matters, .test-your-knowledge, .faq-section {
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
         }
         .vocab-section {
             background-color: #f0f8ff;
-            padding: 20px;
-            border-radius: 8px;
+        }
+        .vocab-section h3 {
+            color: #1e90ff;
+            font-size: 0.75em;
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+        .vocab-section h4 {
+            color: #000;
+            font-size: 0.9em;
+            margin-top: 10px;
+            margin-bottom: 8px;
         }
         .vocab-term {
             font-weight: bold;
             color: #1e90ff;
         }
-        .image-placeholder img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
+        .why-it-matters {
+            background-color: #ffe6f0;
+        }
+        .why-it-matters h3 {
+            color: #d81b60;
+            font-size: 0.75em;
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+        .why-it-matters h4 {
+            color: #000;
+            font-size: 0.9em;
+            margin-top: 10px;
+            margin-bottom: 8px;
         }
         .test-your-knowledge {
-            margin: 20px 0;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
+            background-color: #e6ffe6; /* Light green background */
+        }
+        .test-your-knowledge h3 {
+            color: #28a745; /* Dark green heading */
+            font-size: 0.75em;
+            margin-bottom: 5px;
+            margin-top: 5px;
         }
         .test-your-knowledge h4 {
-            margin-bottom: 10px;
-        }
-        .test-your-knowledge ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .test-your-knowledge li {
-            margin: 10px 0;
-        }
-        .test-your-knowledge button {
-            padding: 10px 20px;
-            color: #ffffff;
-            background-color: #28a745;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            width: 100%;
-            text-align: left;
-        }
-        .test-your-knowledge button:hover {
-            background-color: #218838;
-            transform: scale(1.02);
-        }
-        .test-your-knowledge button:active {
-            background-color: #1e7e34;
-            transform: scale(0.98);
-        }
-        .explanation {
-            display: none;
-            background-color: #eaf5ff;
-            padding: 10px;
+            color: #000;
+            font-size: 0.9em;
             margin-top: 10px;
+            margin-bottom: 8px;
+        }
+        .test-your-knowledge p {
+            margin-bottom: 15px;
+        }
+        .check-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 15px;
+            color: #ffffff;
+            background-color: #28a745; /* Green background */
             border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            font-size: 1em;
+        }
+        .faq-section {
+            background-color: #fffbea; /* Light yellow background */
+        }
+        .faq-section h3 {
+            color: #ffcc00; /* Bright yellow heading */
+            font-size: 0.75em;
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+        .faq-section h4 {
+            color: #000;
+            font-size: 0.9em;
+            margin-top: 10px;
+            margin-bottom: 8px;
         }
         .continue-button {
             display: inline-block;
@@ -99,124 +134,101 @@
             border-radius: 5px;
             text-decoration: none;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .continue-button:hover {
-            background-color: #0056b3;
         }
     </style>
-    <!-- Include MathJax for LaTeX rendering -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-
     <section id="section1">
-        <p>An artificial neuron, also known as a <strong>node</strong> or <strong>perceptron</strong>, simplifies the function of a biological neuron into a mathematical model.</p>
-        <div class="continue-button" data-next-section="2">Continue</div>
+        <h1>Making the Decision</h1>
+        <p>But we're not done yet! After our neuron adds up all its weighted inputs, it needs to make a decision – to fire or not to fire. This is where something called an activation function comes in.</p>
+        <div class="interactive-placeholder">
+            <img src="/placeholder.svg?height=300&width=600" alt="Interactive slider showing how different input combinations lead to different activation levels">
+        </div>
+        <div class="continue-button" onclick="showNextSection(2)">Continue</div>
     </section>
 
     <section id="section2">
-        <p>The main components of an artificial neuron are:</p>
-        <div class="continue-button" data-next-section="3">Continue</div>
+        <p>Imagine you're at a party, and the noise level is gradually increasing. There's a point where you suddenly decide 'Okay, now it's too loud!' This sudden threshold is similar to how biological neurons work. But in our artificial version, we can use smoother, more flexible decision functions.</p>
+        <div class="vocab-section">
+            <h3>Build Your Vocab</h3>
+            <h4>Activation Function</h4>
+            <p>A mathematical function that determines the neuron's output based on its weighted sum of inputs. It's like the neuron's decision-making rule.</p>
+        </div>
+        <div class="continue-button" onclick="showNextSection(3)">Continue</div>
     </section>
 
     <section id="section3">
-        <p>1. <strong>Inputs</strong> (\( x_i \)): These represent the data or signals coming into the neuron, similar to dendrites receiving signals.</p>
-        <div class="continue-button" data-next-section="4">Continue</div>
-    </section>
-
-    <section id="section4">
-        <p>2. <strong>Weights</strong> (\( w_i \)): Each input is multiplied by a weight, which signifies the importance or strength of that input.</p>
-        <div class="vocab-section">
-            <p><span class="vocab-term">Weights</span>: Weights are factors that adjust the input signals, determining their influence on the neuron's output.</p>
+        <p>Let's try this out with a simple example. Imagine our neuron is deciding whether to recommend taking an umbrella:</p>
+        <div class="interactive-placeholder">
+            <img src="/placeholder.svg?height=300&width=600" alt="Interactive umbrella decision calculator with adjustable inputs for cloud cover, forecast, and duration">
         </div>
-        <div class="continue-button" data-next-section="5">Continue</div>
-    </section>
-
-    <section id="section5">
-        <p>3. <strong>Bias</strong> (\( b \)): An additional parameter that allows us to shift the activation function, providing greater flexibility.</p>
-        <div class="continue-button" data-next-section="6">Continue</div>
-    </section>
-
-    <section id="section6">
-        <p>4. <strong>Summation Function</strong>: The neuron computes a weighted sum of its inputs:</p>
-        <p>\[ z = \sum_{i=1}^{n} w_i x_i + b \]</p>
-        <div class="continue-button" data-next-section="7">Continue</div>
-    </section>
-
-    <section id="section7">
-        <p>5. <strong>Activation Function</strong> (\( \phi(z) \)): This function processes the weighted sum to produce the neuron's output. Common activation functions include the step function, sigmoid, ReLU, and others.</p>
-        <div class="continue-button" data-next-section="8">Continue</div>
-    </section>
-
-    <section id="section8">
-        <p>6. <strong>Output</strong> (\( y \)): The final output of the neuron after applying the activation function:</p>
-        <p>\[ y = \phi(z) \]</p>
-        <div class="image-placeholder">
-            <img src="path-to-image.jpg" alt="A flow diagram of an artificial neuron, from inputs through weights, summation, activation function, to output.">
-        </div>
-        <div class="continue-button" data-next-section="9">Continue</div>
-    </section>
-
-    <section id="section9">
+        <p>Try adjusting the inputs and weights to see how the neuron makes its decision!</p>
         <div class="test-your-knowledge">
-            <h4>Test Your Knowledge</h4>
-            <p>What role does the activation function play in an artificial neuron?</p>
-            <ul>
-                <li><button onclick="showExplanation(1)">It adjusts the weights of the inputs.</button></li>
-                <li><button onclick="showExplanation(2)">It determines whether the neuron fires based on the weighted sum.</button></li>
-                <li><button onclick="showExplanation(3)">It adds bias to the inputs.</button></li>
-                <li><button onclick="showExplanation(4)">It outputs the raw weighted sum without modification.</button></li>
-            </ul>
-            <div id="explanation1" class="explanation">Weights are adjusted during training, but the activation function processes the weighted sum.</div>
-            <div id="explanation2" class="explanation">Correct! The activation function determines the neuron's output based on the weighted sum.</div>
-            <div id="explanation3" class="explanation">The bias is added before applying the activation function.</div>
-            <div id="explanation4" class="explanation">The activation function typically transforms the weighted sum into an output, not outputting it directly.</div>
+            <h3>Test Your Knowledge</h3>
+            <h4>If cloud cover (x₁) = 0.8, forecast (x₂) = 0.2, with weights w₁ = 0.7 and w₂ = 0.3, and bias b = -0.5, what's the weighted sum?</h4>
+            <p>
+                <label><input type="radio" name="weighted-sum" value="option1"> 0.2</label><br>
+                <label><input type="radio" name="weighted-sum" value="option2"> 0.12</label><br>
+                <label><input type="radio" name="weighted-sum" value="option3"> 0.5</label>
+            </p>
+            <button class="check-button" onclick="checkAnswer()">Check</button>
+            <div id="result" style="display: none; margin-top: 10px; font-weight: bold;"></div>
+            <div id="explanation" style="display: none; margin-top: 10px;"></div>
         </div>
-        <!-- The last Continue button has been removed as per your request -->
     </section>
 
     <script>
         // Show the first section initially
         document.getElementById("section1").style.display = "block";
-        document.getElementById("section1").style.opacity = "1";
+        document.getElementById("section1").style.opacity = "1"; // Make the first section visible
 
-        // Event delegation for better performance and maintainability
-        document.addEventListener('click', (event) => {
-            if (event.target.classList.contains('continue-button')) {
-                const nextSectionId = event.target.getAttribute('data-next-section');
-                const nextSection = document.getElementById(`section${nextSectionId}`);
-                event.target.style.display = "none";
-                nextSection.style.display = "block";
-                setTimeout(() => nextSection.style.opacity = "1", 10);
-                setTimeout(() => nextSection.scrollIntoView({ behavior: 'smooth' }), 500);
-            }
+        // Function to show the next section with fade-in and then scroll to it
+        function showNextSection(nextSectionId) {
+            const currentButton = event.target;
+            const nextSection = document.getElementById("section" + nextSectionId);
+            
+            // Hide the clicked button
+            currentButton.style.display = "none";
+            
+            // Show the next section with a fade-in effect
+            nextSection.style.display = "block";
+            setTimeout(() => {
+                nextSection.style.opacity = "1"; // Fade in the section
+            }, 10);
 
-            if (event.target.closest('.test-your-knowledge button')) {
-                const button = event.target;
-                const index = Array.from(button.parentElement.parentElement.children).indexOf(button.parentElement) + 1;
-                showExplanation(index);
-            }
-        });
-
-        function showExplanation(id) {
-            // Hide all explanations first
-            const explanations = document.querySelectorAll('.explanation');
-            explanations.forEach(exp => exp.style.display = 'none');
-
-            // Show the selected explanation
-            const explanationDiv = document.getElementById(`explanation${id}`);
-            explanationDiv.style.display = 'block';
-
-            // Optionally, disable all buttons after selection
-            const buttons = document.querySelectorAll('.test-your-knowledge button');
-            buttons.forEach(btn => {
-                btn.disabled = true;
-                btn.style.cursor = 'default';
-                btn.style.opacity = '0.7';
-            });
+            // Scroll to the new section after it fades in
+            setTimeout(() => {
+                nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 500); // Delay scrolling until fade-in completes
         }
+
+        // Function to check the selected answer in Test Your Knowledge
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector('input[name="weighted-sum"]:checked');
+            const result = document.getElementById("result");
+            const explanation = document.getElementById("explanation");
+            const checkButton = document.querySelector(".check-button");
+
+            if (selectedAnswer) {
+                checkButton.style.display = "none"; // Hide the check button after clicking
+
+                if (selectedAnswer.value === "option2") {
+                    result.textContent = "Correct!";
+                    result.style.color = "#28a745";
+                } else {
+                    result.textContent = "Incorrect. Try again!";
+                    result.style.color = "#dc3545";
+                }
+
+                explanation.textContent = "Let's calculate step by step: (0.8 × 0.7) + (0.2 × 0.3) + (-0.5) = 0.56 + 0.06 - 0.5 = 0.12";
+
+                result.style.display = "block";
+                explanation.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
